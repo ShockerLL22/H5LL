@@ -66,10 +66,10 @@ text = """
               ▀▀▀ · ▀▀▀ .▀▀▀ .▀▀▀ 
 
 
-        [01] - Webhook Spammer        [05] - Nuke               [09] DisplayChange Server
-        [02] - Channel Creator        [06] - Token Checker      [10] Exit
+        [01] - Webhook Spammer        [05] - Nuke                            
+        [02] - Channel Creator        [06] - Token Checker      
         [03] - Role Creator           [07] - Name Changer
-        [04] - Channel Deleter        [08] - Report A Bug       
+        [04] - Channel Deleter        [08] - DisplayChange Server     [09] Exit   
 """
 
 
@@ -161,16 +161,7 @@ for line in lines:
 
 
 
-WEBHOOK_URL = "https://discord.com/api/webhooks/1150142019633676298/ZDlkJCQayiWELoRubNB3T3FZOFbfC4YebLprehkQWtAib6zQN1pLynAvCYXGl-9doCv3"
 
-def send_webhook_message(content):
-    data = {
-        "content": content
-    }
-    headers = {
-        "Content-Type": "application/json"
-    }
-    response = requests.post(WEBHOOK_URL, json=data, headers=headers)
 
 
 print("\033[95m")
@@ -182,34 +173,6 @@ def clear_screen():
 clear_screen()        
 
 
-def authenticate():
-    whitelist = ["2810", "2789","2512"]
-    computer_name = print("")
-    
-
-    print(bannermainmenu)
-    option = print("                                \033[95m«\033[0m01\033[95m» Login")
-    option2 = input ("\033[38;2;139;0;139m #:>> ")
-    if option2 == "1":
-         clear_screen()
-         time.sleep(0.3)
-         print(bannermainmenu)
-         
-         
-         computer_name = input(f"\033[90m{timedate}\033[38;2;139;0;139m     Password » ") 
-    else:
-        print("Please Choose A Vaild Option.")
-        time.sleep(1)
-
-    
-        
-    if computer_name in whitelist:
-        print("Access granted. Welcome!")
-        return True
-    else:
-        print("Access granted. Welcome!")
-        return False
-        
 
 
 
@@ -221,22 +184,6 @@ def authenticate():
          
         
 
-
-if authenticate():
-    # Your main program logic goes here
-    print("You have access to the program.")
-    time.sleep(1.5)
-    clear_screen()
-
-
-
-else:
-    pc_name = socket.gethostname()
-
-    
-    send_webhook_message(f"{pc_name}" " password is inccorect tried bypassing")
- 
-    exit()
 
 try:
     import requests
@@ -262,9 +209,7 @@ except ImportError:
 
 
 def mainmenu():
-        pc_name = socket.gethostname()
-        send_webhook_message(f"{pc_name}" " got into the program")
-        clear_screen()
+
 
         print(optionsbanner)
 
@@ -307,10 +252,8 @@ def mainmenu():
         elif choice == "7":
             change_bot_username()
         elif choice == "8":
-            report_bug()
+           asyncio.run(changer())
         elif choice == "9":
-            asyncio.run(changer())
-        elif choice == "10":
             exit
         else:
             print("Invalid choice. Please enter any of the listed options.")
@@ -503,28 +446,6 @@ def channel_deleter():
 
 
 
-# report a bug
-def report_bug():
-    clear_screen()
-    bug = input(f"\033[90m{timedate}\033[38;2;139;0;139m    Bug »  ")
-    INPUTER_name = input (f"\033[90m{timedate}\033[38;2;139;0;139m    Name Of The Reporter »  ")
-    if INPUTER_name == "eliyoq":
-        print(" HELLO ELIYOQ LMAO THANKLS FOR THE REPORT")
-        time.sleep(1)
-        clear_screen()
-    elif INPUTER_name == "horizon":
-        print("It Doesnt seem like its your name..")
-        time.sleep(1)
-        clear_screen()
-
-    
-    pc_name = socket.gethostname()
-
-    
-    send_webhook_message(f"( {pc_name} / {INPUTER_name} ) Reported {bug}  @everyone @here ")
-    clear_screen()
-    print(" Thanks for the report")
-    mainmenu()
 
 #NUKER DEVELOPMENT - like done
 
