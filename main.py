@@ -17,7 +17,7 @@ def install_packages(packages):
     for package in packages:
         subprocess.run(["python", "-m", "pip", "install", package], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-packages = ["requests", "discord.py", "colorama", "discord", "setuptools", "pathlib", "fade", "tls_client","websocket", "httpx"]
+packages = ["requests", "discord.py", "colorama", "discord", "pathlib"]
 installation_complete = False
 
 loading_thread = threading.Thread(target=loading_message)
@@ -29,12 +29,8 @@ loading_thread.join()
 
 #loading screenended
 import requests
-import os, requests, tls_client, datetime, sys, hashlib, threading, random, json, time, websocket, httpx, typing, subprocess
 from colorama import Fore; import fade
-import pkg_resources
-import emoji
 from colorama import init, Fore, Style
-import socket
 import random
 import discord
 import asyncio
