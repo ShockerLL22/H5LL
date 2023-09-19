@@ -15,3 +15,9 @@ Open Source Nuker
 
 
               
+Discord : https://discord.gg/UxBXmVHRdq
+Discord User : horionz4kk / H5LL
+
+
+
+# NOTE THIS TOOLS WEREN'T MEANING TO CAUSE ANY HARM ITS JS FOR LEARNING!
