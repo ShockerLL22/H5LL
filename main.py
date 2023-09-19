@@ -68,8 +68,8 @@ text = """
 
 
         [01] - Webhook Spammer        [05] - Nuke               [09] - Kick Guild                        
-        [02] - Channel Creator        [06] - Token Checker      [10] - Exit
-        [03] - Role Creator           [07] - Name Changer
+        [02] - Channel Creator        [06] - Token Checker      [10] - Ban Guild
+        [03] - Role Creator           [07] - Name Changer       [11] - Exit
         [04] - Channel Deleter        [08] - DisplayChange Server      
 """
 
@@ -258,7 +258,9 @@ def mainmenu():
         elif choice == "9":
             kick_all()
         elif choice == "10":
-            exit
+            ban_all()
+        elif choice == "11":
+            return
         else:
             print("Invalid choice. Please enter any of the listed options.")
             time.sleep(1)
@@ -705,13 +707,54 @@ def kick_all():
                     await member.kick()
                     color = rainbow_colors[kick_count % len(rainbow_colors)]
                     kick_count += 1
-                    print(f'Kicked {member.name} ({color}{kick_count}{Style.RESET_ALL})')
+                    print(f'\033[38;2;139;0;139mKicked {member.name} ({color}{kick_count}{Style.RESET_ALL})\033[38;2;139;0;139m')
                 except discord.Forbidden:
-                    print(f'\033[38;2;139;0;139mSkipped {member.name} (Insufficient permissions)')
+                    print(f'\033[38;2;139;0;139mSkipped {member.name} (Insufficient permissions)\033[38;2;139;0;139m')
 
     bot.run(TOKEN)
 
 
+
+
+def ban_all():
+    clear_screen()
+    script_dir = Path(__file__).resolve().parent
+    bottoken_file_path = script_dir / "bottoken.txt"
+
+    if not bottoken_file_path.exists():
+        print("The 'bottoken.txt' file does not exist. Creating it now...")
+        bottoken_file_path.touch()
+
+    with open(bottoken_file_path, "r") as file:
+        TOKEN = file.readline().strip()
+
+    intents = discord.Intents.default()
+    intents.members = True
+    bot = commands.Bot(command_prefix="!", intents=intents)
+    GUILD_ID = input(f"\033[90m{timedate}\033[38;2;139;0;139m    Guild Id »  ")
+    BAN_REASON = input(f"\033[90m{timedate}\033[38;2;139;0;139m    Reason »  ")
+    ban_count = 0
+    rainbow_colors = [Fore.RED, Fore.YELLOW, Fore.GREEN, Fore.BLUE, Fore.MAGENTA, Fore.CYAN, Fore.WHITE, Fore.BLACK,
+                      Fore.LIGHTRED_EX, Fore.LIGHTYELLOW_EX, Fore.LIGHTGREEN_EX, Fore.LIGHTBLUE_EX, Fore.LIGHTMAGENTA_EX,
+                      Fore.LIGHTCYAN_EX]
+
+    @bot.event
+    async def on_ready():
+        print(f'Logged in as {bot.user.name}')
+        time.sleep(1)
+        clear_screen()
+        guild = bot.get_guild(int(GUILD_ID))
+        nonlocal ban_count
+        for member in guild.members:
+            if member != bot.user:  
+                try:
+                    await member.ban(reason=BAN_REASON)
+                    color = rainbow_colors[ban_count % len(rainbow_colors)]
+                    ban_count += 1
+                    print(f'\033[38;2;139;0;139mBanned {member.name} ({color}{ban_count}{Style.RESET_ALL})\033[38;2;139;0;139m')
+                except discord.Forbidden:
+                    print(f'\033[38;2;139;0;139mSkipped {member.name} (Insufficient permissions)\033[38;2;139;0;139m')
+    bot.run(TOKEN)
 
 
 
