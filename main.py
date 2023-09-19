@@ -17,7 +17,7 @@ def install_packages(packages):
     for package in packages:
         subprocess.run(["python", "-m", "pip", "install", package], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-packages = ["requests", "discord.py", "colorama", "discord", "setuptools", "pathlib"]
+packages = ["requests", "discord.py", "colorama", "discord", "setuptools", "pathlib", "fade", "tls_client","websocket", "httpx"]
 installation_complete = False
 
 loading_thread = threading.Thread(target=loading_message)
@@ -29,7 +29,10 @@ loading_thread.join()
 
 #loading screenended
 import requests
+import os, requests, tls_client, datetime, sys, hashlib, threading, random, json, time, websocket, httpx, typing, subprocess
+from colorama import Fore; import fade
 import pkg_resources
+import emoji
 from colorama import init, Fore, Style
 import socket
 import random
@@ -47,6 +50,8 @@ from colorama import Fore , Style
 import tracemalloc
 import datetime
 #end of imports
+
+
 
 timedate = datetime.datetime.now().strftime("%H:%M:%S")
 
@@ -66,10 +71,10 @@ text = """
               ▀▀▀ · ▀▀▀ .▀▀▀ .▀▀▀ 
 
 
-        [01] - Webhook Spammer        [05] - Nuke                            
-        [02] - Channel Creator        [06] - Token Checker      
+        [01] - Webhook Spammer        [05] - Nuke               [09] - Kick Guild                        
+        [02] - Channel Creator        [06] - Token Checker      [10] - Exit
         [03] - Role Creator           [07] - Name Changer
-        [04] - Channel Deleter        [08] - DisplayChange Server     [09] Exit   
+        [04] - Channel Deleter        [08] - DisplayChange Server      
 """
 
 
@@ -226,10 +231,11 @@ def mainmenu():
 
 
 
-        choice = input(f"\033[90m{timedate}\033[38;2;139;0;139m  #:>> ")
-
+        choice = input(f"\033[90m{timedate}\033[38;2;139;0;139m  [H5LL] »   ")
         if choice == "1":
             webhook_spammer()
+
+        
         elif choice == "2":
             create_channels()
         elif choice == "3":
@@ -254,6 +260,8 @@ def mainmenu():
         elif choice == "8":
            asyncio.run(changer())
         elif choice == "9":
+            kick_all()
+        elif choice == "10":
             exit
         else:
             print("Invalid choice. Please enter any of the listed options.")
@@ -663,6 +671,53 @@ async def changer():
 async def start_bot(client, token):
     await client.start(token)
         
+
+
+
+
+def kick_all():
+    clear_screen()
+    script_dir = Path(__file__).resolve().parent
+    bottoken_file_path = script_dir / "bottoken.txt"
+
+    if not bottoken_file_path.exists():
+        print("The 'bottoken.txt' file does not exist. Creating it now...")
+        bottoken_file_path.touch()
+
+    with open(bottoken_file_path, "r") as file:
+        TOKEN = file.readline().strip()
+
+    intents = discord.Intents.default()
+    intents.members = True
+    bot = commands.Bot(command_prefix="!", intents=intents)
+    GUILD_ID = input(f"\033[90m{timedate}\033[38;2;139;0;139m    Guild Id »  ")
+    kick_count = 0
+    rainbow_colors = [Fore.RED, Fore.YELLOW, Fore.GREEN, Fore.BLUE, Fore.MAGENTA, Fore.CYAN, Fore.WHITE, Fore.BLACK,
+                      Fore.LIGHTRED_EX, Fore.LIGHTYELLOW_EX, Fore.LIGHTGREEN_EX, Fore.LIGHTBLUE_EX, Fore.LIGHTMAGENTA_EX,
+                      Fore.LIGHTCYAN_EX]
+
+    @bot.event
+    async def on_ready():
+        print(f'Logged in as {bot.user.name}')
+        time.sleep(1)
+        clear_screen()
+        guild = bot.get_guild(int(GUILD_ID))
+        nonlocal kick_count
+        for member in guild.members:
+            if member != bot.user:  
+                try:
+                    await member.kick()
+                    color = rainbow_colors[kick_count % len(rainbow_colors)]
+                    kick_count += 1
+                    print(f'Kicked {member.name} ({color}{kick_count}{Style.RESET_ALL})')
+                except discord.Forbidden:
+                    print(f'\033[38;2;139;0;139mSkipped {member.name} (Insufficient permissions)')
+
+    bot.run(TOKEN)
+
+
+
+
 
 
 
