@@ -6,7 +6,7 @@ import time
 import threading
 def loading_message():
     loading_dots = ["", ".", "..", "..."]
-    message = "Installing Client"
+    message = "installing Requirements"
 
     while not installation_complete:
         for dot in loading_dots:
@@ -46,78 +46,9 @@ from colorama import Fore , Style
 import tracemalloc
 import datetime
 #end of imports
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
-
-
-timedate = datetime.datetime.now().strftime("%H:%M:%S")
-
-
-def resource_path(relative_path):
-    if hasattr(sys, '_MEIPASS'):
-        return os.path.join(sys._MEIPASS, relative_path)
-    return os.path.join(os.path.abspath("."), relative_path)
-
-
-
-text = """
-              ▄ .▄▄▄▄ .▄▄▌  ▄▄▌  
-              ██▪▐█▀▄.▀·██•  ██•  
-              ██▀▀█▐▀▀▪▄██ ▪ ██ ▪ 
-              ██▌▐▀▐█▄▄▌▐█▌ ▄▐█▌ ▄
-              ▀▀▀ · ▀▀▀ .▀▀▀ .▀▀▀ 
-
-
-        [01] - Webhook Spammer        [05] - Nuke               [09] - Kick Guild                        
-        [02] - Channel Creator        [06] - Token Checker      [10] - Ban Guild
-        [03] - Role Creator           [07] - Name Changer       [11] - Exit
-        [04] - Channel Deleter        [08] - DisplayChange Server      
-"""
-
-
-purple_colors = [
-    "\033[38;2;139;0;139m",
-    "\033[38;2;128;0;128m",
-    "\033[38;2;118;0;118m",
-    "\033[38;2;108;0;108m",
-    "\033[38;2;98;0;98m",
-    "\033[38;2;88;0;88m",
-    "\033[38;2;78;0;78m",
-    "\033[38;2;68;0;68m",
-    "\033[38;2;58;0;58m",
-    "\033[38;2;48;0;48m",
-]
-
-
-lines = text.split("\n")
-
-
-optionsbanner = ""
-for line in lines:
-    for i in range(len(line)):
-        if line[i] != " ":
-            color_index = i % len(purple_colors)
-            optionsbanner += purple_colors[color_index] + line[i]
-        else:
-            optionsbanner += " "
-    optionsbanner += Style.RESET_ALL  
-    optionsbanner += "\n"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-init(autoreset=False)
 
 
 text = """
@@ -157,6 +88,39 @@ for line in lines:
     bannermainmenu += Style.RESET_ALL 
     bannermainmenu += "\n"
 
+timedate = datetime.datetime.now().strftime("%H:%M:%S")
+
+
+
+def startermenu():
+    clear_screen()
+    print(bannermainmenu)
+    
+    print("\033[38;2;139;0;139m                  [01] - Discord       [02] - Gmail      ")
+    print("")
+    print("")
+
+    choicemenu = input(f"\033[90m{timedate}\033[38;2;139;0;139m  [H5LL] »   ")
+    if choicemenu == "1":
+        print(" ")             # before def execute
+    elif choicemenu == "2":
+        clear_screen()
+        print("Sorry Not Released Yet!")
+        time.sleep(2)
+        return startermenu()
+    else:
+        print("Please Pick Something From This List.")
+        time.sleep(1)
+        return startermenu()
+
+startermenu()
+
+
+
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
 
 
 
@@ -164,55 +128,62 @@ for line in lines:
 
 
 
+text = """
+              ▄ .▄▄▄▄ .▄▄▌  ▄▄▌  
+              ██▪▐█▀▄.▀·██•  ██•  
+              ██▀▀█▐▀▀▪▄██ ▪ ██ ▪ 
+              ██▌▐▀▐█▄▄▌▐█▌ ▄▐█▌ ▄
+              ▀▀▀ · ▀▀▀ .▀▀▀ .▀▀▀   Version 1.03V Beta
 
+
+        [01] - Webhook Spammer        [05] - Nuke                 [09] - Kick Guild                        
+        [02] - Channel Creator        [06] - Token Checker        [10] - Ban Guild
+        [03] - Role Creator           [07] - Name Changer         [11] - Exit
+        [04] - Channel Deleter        [08] - DisplayChange Server [12] - ( Soon )
+"""
+
+
+purple_colors = [
+    "\033[38;2;139;0;139m",
+    "\033[38;2;128;0;128m",
+    "\033[38;2;118;0;118m",
+    "\033[38;2;108;0;108m",
+    "\033[38;2;98;0;98m",
+    "\033[38;2;88;0;88m",
+    "\033[38;2;78;0;78m",
+    "\033[38;2;68;0;68m",
+    "\033[38;2;58;0;58m",
+    "\033[38;2;48;0;48m",
+]
+
+
+lines = text.split("\n")
+
+
+optionsbannerdiscord = ""
+for line in lines:
+    for i in range(len(line)):
+        if line[i] != " ":
+            color_index = i % len(purple_colors)
+            optionsbannerdiscord += purple_colors[color_index] + line[i]
+        else:
+            optionsbannerdiscord += " "
+    optionsbannerdiscord += Style.RESET_ALL  
+    optionsbannerdiscord += "\n"
+
+
+
+
+
+init(autoreset=False)
 print("\033[95m")
-        
-def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear')
-
-
 clear_screen()        
-
-
-
-
-
-     
-
- 
-   
- 
-         
-        
-
-
-try:
-    import requests
-except ImportError:
-    import subprocess
-    import sys
-
-    # Attempt to install requests using pip
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "requests"])
-    import requests
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def mainmenu():
 
 
-        print(optionsbanner)
+        print(optionsbannerdiscord)
 
     
     
@@ -284,9 +255,8 @@ def webhook_spammer():
             pass
 
     with open(file_path, "r") as file:
-        new_webhook_url = file.readline().strip()
+        webhook_url = file.readline().strip()
 
-    webhook_url = new_webhook_url
 
     content = input(f"\033[90m{timedate}\033[38;2;139;0;139m    Message »  ")
     num_times = input(f"\033[90m{timedate}\033[38;2;139;0;139m    Amount Of Times »  ")
@@ -311,8 +281,6 @@ def webhook_spammer():
             print("Message sent successfully!")
         else:
             print(f"\033[32m""Message sent successfully!")
-            time.sleep(0.1)
-            print("✅")
 
         time.sleep(delay)
 
@@ -326,11 +294,11 @@ def create_channels():
     bottoken_file_path = script_dir / "bottoken.txt"
 
     if not bottoken_file_path.exists():
-      print("The 'bottoken.txt' file does not exist. Creating it now...")
-    bottoken_file_path.touch()
-    
-    with open(bottoken_file_path, "r") as file:
-      TOKEN = file.readline().strip()
+     print("The 'bottoken.txt' file does not exist. Creating it now...")
+     bottoken_file_path.touch()
+
+    with open(bottoken_file_path, "r", buffering=8192) as file:
+     TOKEN = file.readline().strip()
 
 
     guild_id = input(f"\033[90m{timedate}\033[38;2;139;0;139m  Guild Id »  ")
@@ -366,11 +334,11 @@ def RoleCreator():
     bottoken_file_path = script_dir / "bottoken.txt"
 
     if not bottoken_file_path.exists():
-      print("The 'bottoken.txt' file does not exist. Creating it now...")
-    bottoken_file_path.touch()
-    
-    with open(bottoken_file_path, "r") as file:
-      TOKEN = file.readline().strip()
+     print("The 'bottoken.txt' file does not exist. Creating it now...")
+     bottoken_file_path.touch()
+
+    with open(bottoken_file_path, "r", buffering=8192) as file:
+     TOKEN = file.readline().strip()
     
     intents = discord.Intents.default()
     intents.guilds = True 
@@ -410,11 +378,11 @@ def channel_deleter():
     bottoken_file_path = script_dir / "bottoken.txt"
 
     if not bottoken_file_path.exists():
-      print("The 'bottoken.txt' file does not exist. Creating it now...")
-    bottoken_file_path.touch()
-    
-    with open(bottoken_file_path, "r") as file:
-      TOKEN = file.readline().strip()
+     print("The 'bottoken.txt' file does not exist. Creating it now...")
+     bottoken_file_path.touch()
+
+    with open(bottoken_file_path, "r", buffering=8192) as file:
+     TOKEN = file.readline().strip()
     GUILD_ID = int(input(f"\033[90m{timedate}\033[38;2;139;0;139m    Guild Id »  "))
 
     intents = discord.Intents.default()
@@ -461,11 +429,11 @@ def nuke():
     bottoken_file_path = script_dir / "bottoken.txt"
 
     if not bottoken_file_path.exists():
-      print("The 'bottoken.txt' file does not exist. Creating it now...")
-    bottoken_file_path.touch()
-    
-    with open(bottoken_file_path, "r") as file:
-      TOKEN = file.readline().strip()
+     print("The 'bottoken.txt' file does not exist. Creating it now...")
+     bottoken_file_path.touch()
+
+    with open(bottoken_file_path, "r", buffering=8192) as file:
+     TOKEN = file.readline().strip()
 
     GUILD_ID = int(input(f"\033[90m{timedate}\033[38;2;139;0;139m    Guild Id »  "))
 
@@ -500,7 +468,6 @@ def nuke():
                 for channel in guild.channels:
                     try:
                         await channel.delete()
-                        time.sleep(0.5)  # Rate limit friendly delay
                     except Exception as e:
                         print(f"Error deleting channel {channel.name}: {e}")
 
@@ -524,7 +491,6 @@ def nuke():
                     try:
                         channel = await guild.create_text_channel(name=channel_name)
                         await channel.send(pick_message)
-                        time.sleep(0.5)  # Rate limit friendly delay
                         print(f"Channel {channel_name} {i + 1} created and message sent.")
                     except Exception as e:
                         print(f"Error creating channel or sending message: {e}")
@@ -556,11 +522,11 @@ def bot_token_checker():
     bottoken_file_path = script_dir / "bottoken.txt"
 
     if not bottoken_file_path.exists():
-      print("The 'bottoken.txt' file does not exist. Creating it now...")
-    bottoken_file_path.touch()
-    
-    with open(bottoken_file_path, "r") as file:
-      TOKEN = file.readline().strip()
+     print("The 'bottoken.txt' file does not exist. Creating it now...")
+     bottoken_file_path.touch()
+
+    with open(bottoken_file_path, "r", buffering=8192) as file:
+     TOKEN = file.readline().strip()
 
     
     intents = discord.Intents.default()
@@ -588,12 +554,11 @@ def change_bot_username():
     bottoken_file_path = script_dir / "bottoken.txt"
 
     if not bottoken_file_path.exists():
-      print("The 'bottoken.txt' file does not exist. Creating it now...")
-    bottoken_file_path.touch()
-    
-    with open(bottoken_file_path, "r") as file:
-      TOKEN = file.readline().strip()
+     print("The 'bottoken.txt' file does not exist. Creating it now...")
+     bottoken_file_path.touch()
 
+    with open(bottoken_file_path, "r", buffering=8192) as file:
+     TOKEN = file.readline().strip()
 
     GUILD_ID = int(input(f"\033[90m{timedate}\033[38;2;139;0;139m    Guild Id »  "))
 
@@ -679,11 +644,11 @@ def kick_all():
     bottoken_file_path = script_dir / "bottoken.txt"
 
     if not bottoken_file_path.exists():
-        print("The 'bottoken.txt' file does not exist. Creating it now...")
-        bottoken_file_path.touch()
+     print("The 'bottoken.txt' file does not exist. Creating it now...")
+     bottoken_file_path.touch()
 
-    with open(bottoken_file_path, "r") as file:
-        TOKEN = file.readline().strip()
+    with open(bottoken_file_path, "r", buffering=8192) as file:
+     TOKEN = file.readline().strip()
 
     intents = discord.Intents.default()
     intents.members = True
@@ -722,11 +687,11 @@ def ban_all():
     bottoken_file_path = script_dir / "bottoken.txt"
 
     if not bottoken_file_path.exists():
-        print("The 'bottoken.txt' file does not exist. Creating it now...")
-        bottoken_file_path.touch()
+     print("The 'bottoken.txt' file does not exist. Creating it now...")
+     bottoken_file_path.touch()
 
-    with open(bottoken_file_path, "r") as file:
-        TOKEN = file.readline().strip()
+    with open(bottoken_file_path, "r", buffering=8192) as file:
+     TOKEN = file.readline().strip()
 
     intents = discord.Intents.default()
     intents.members = True
