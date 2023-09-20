@@ -17,7 +17,7 @@ def install_packages(packages):
     for package in packages:
         subprocess.run(["python", "-m", "pip", "install", package], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-packages = ["requests", "discord.py", "colorama", "discord", "pathlib"]
+packages = ["requests", "discord.py", "colorama", "discord", "pathlib", "tracemalloc", "asyncio"]
 installation_complete = False
 
 loading_thread = threading.Thread(target=loading_message)
@@ -95,10 +95,15 @@ timedate = datetime.datetime.now().strftime("%H:%M:%S")
 def startermenu():
     clear_screen()
     print(bannermainmenu)
-    
-    print("\033[38;2;139;0;139m                  [01] - Discord       [02] - Gmail      ")
+    print("\033[38;2;139;0;139m                    [01] - Discord       [02] - Gmail      ")
     print("")
     print("")
+    print("")
+    print("")
+    print("")
+
+
+
 
     choicemenu = input(f"\033[90m{timedate}\033[38;2;139;0;139m  [H5LL] »   ")
     if choicemenu == "1":
@@ -246,16 +251,22 @@ def mainmenu():
 
 def webhook_spammer():
     clear_screen()
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(script_dir, "webhook.txt")
+    script_dir = Path(__file__).resolve().parent
 
-    if not os.path.exists(file_path):
-        print("The 'webhook.txt' file does not exist in the script's directory. Creating it now...")
-        with open(file_path, "w") as file:
-            pass
 
-    with open(file_path, "r") as file:
-        webhook_url = file.readline().strip()
+    data_dir = script_dir / "data"
+
+
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    bottoken_file_path = data_dir / "bottoken.txt"
+
+    if not bottoken_file_path.exists():
+     print("The 'webhook.txt' file does not exist. Creating it now...")
+     bottoken_file_path.touch()
+
+    with open(bottoken_file_path, "r", buffering=8192) as file:
+     webhook_url = file.readline().strip()
 
 
     content = input(f"\033[90m{timedate}\033[38;2;139;0;139m    Message »  ")
@@ -291,7 +302,14 @@ def webhook_spammer():
 def create_channels():
     clear_screen()
     script_dir = Path(__file__).resolve().parent
-    bottoken_file_path = script_dir / "bottoken.txt"
+
+
+    data_dir = script_dir / "data"
+
+
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    bottoken_file_path = data_dir / "bottoken.txt"
 
     if not bottoken_file_path.exists():
      print("The 'bottoken.txt' file does not exist. Creating it now...")
@@ -331,7 +349,14 @@ def create_channels():
 def RoleCreator():
     clear_screen()
     script_dir = Path(__file__).resolve().parent
-    bottoken_file_path = script_dir / "bottoken.txt"
+
+
+    data_dir = script_dir / "data"
+
+
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    bottoken_file_path = data_dir / "bottoken.txt"
 
     if not bottoken_file_path.exists():
      print("The 'bottoken.txt' file does not exist. Creating it now...")
@@ -375,7 +400,14 @@ def RoleCreator():
 def channel_deleter():
     clear_screen()
     script_dir = Path(__file__).resolve().parent
-    bottoken_file_path = script_dir / "bottoken.txt"
+
+
+    data_dir = script_dir / "data"
+
+
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    bottoken_file_path = data_dir / "bottoken.txt"
 
     if not bottoken_file_path.exists():
      print("The 'bottoken.txt' file does not exist. Creating it now...")
@@ -426,7 +458,14 @@ def channel_deleter():
 def nuke():
     clear_screen()
     script_dir = Path(__file__).resolve().parent
-    bottoken_file_path = script_dir / "bottoken.txt"
+
+
+    data_dir = script_dir / "data"
+
+
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    bottoken_file_path = data_dir / "bottoken.txt"
 
     if not bottoken_file_path.exists():
      print("The 'bottoken.txt' file does not exist. Creating it now...")
@@ -470,8 +509,10 @@ def nuke():
                         await channel.delete()
                     except Exception as e:
                         print(f"Error deleting channel {channel.name}: {e}")
-
                 print("All channels have been deleted.")
+                rainbow_colors = [Fore.RED, Fore.YELLOW, Fore.GREEN, Fore.BLUE, Fore.MAGENTA, Fore.CYAN, Fore.WHITE, Fore.BLACK,
+                      Fore.LIGHTRED_EX, Fore.LIGHTYELLOW_EX, Fore.LIGHTGREEN_EX, Fore.LIGHTBLUE_EX, Fore.LIGHTMAGENTA_EX,
+                      Fore.LIGHTCYAN_EX]
 
                 for role in guild.roles:
                     if role.name != "@everyone":
@@ -489,11 +530,12 @@ def nuke():
                 pick_message = input(f"\033[90m{timedate}\033[38;2;139;0;139m    Content »  ")
                 for i in range(channel_count):
                     try:
+                        color = rainbow_colors[i % len(rainbow_colors)]
                         channel = await guild.create_text_channel(name=channel_name)
                         await channel.send(pick_message)
-                        print(f"Channel {channel_name} {i + 1} created and message sent.")
+                        print(f"Channel {channel_name}{color} ({i + 1})\033[38;2;139;0;139m Was Created")
                     except Exception as e:
-                        print(f"Error creating channel or sending message: {e}")
+                        print(f"\033[38;2;139;0;139mError creating channel or sending message: {e}")
 
                 await client.close()
             except Exception as e:
@@ -519,7 +561,14 @@ def nuke():
 def bot_token_checker():
     clear_screen()
     script_dir = Path(__file__).resolve().parent
-    bottoken_file_path = script_dir / "bottoken.txt"
+
+
+    data_dir = script_dir / "data"
+
+
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    bottoken_file_path = data_dir / "bottoken.txt"
 
     if not bottoken_file_path.exists():
      print("The 'bottoken.txt' file does not exist. Creating it now...")
@@ -551,7 +600,14 @@ def bot_token_checker():
 def change_bot_username():
     clear_screen()
     script_dir = Path(__file__).resolve().parent
-    bottoken_file_path = script_dir / "bottoken.txt"
+
+
+    data_dir = script_dir / "data"
+
+
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    bottoken_file_path = data_dir / "bottoken.txt"
 
     if not bottoken_file_path.exists():
      print("The 'bottoken.txt' file does not exist. Creating it now...")
@@ -596,14 +652,23 @@ def change_bot_username():
 async def changer():
     clear_screen()
     script_dir = Path(__file__).resolve().parent
-    bottoken_file_path = script_dir / "bottoken.txt"
+
+
+    data_dir = script_dir / "data"
+
+
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    bottoken_file_path = data_dir / "bottoken.txt"
 
     if not bottoken_file_path.exists():
-      print("The 'bottoken.txt' file does not exist. Creating it now...")
-    bottoken_file_path.touch()
-    
+     print("The 'bottoken.txt' file does not exist. Creating it now...")
+     bottoken_file_path.touch()
+
     with open(bottoken_file_path, "r") as file:
-      TOKEN = file.readline().strip()
+     TOKEN = file.readline().strip()
+
+
 
     
     GUILD_ID = input(f"\033[90m{timedate}\033[38;2;139;0;139m    Guild Id »  ")
@@ -641,7 +706,14 @@ async def start_bot(client, token):
 def kick_all():
     clear_screen()
     script_dir = Path(__file__).resolve().parent
-    bottoken_file_path = script_dir / "bottoken.txt"
+
+
+    data_dir = script_dir / "data"
+
+
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    bottoken_file_path = data_dir / "bottoken.txt"
 
     if not bottoken_file_path.exists():
      print("The 'bottoken.txt' file does not exist. Creating it now...")
@@ -684,7 +756,14 @@ def kick_all():
 def ban_all():
     clear_screen()
     script_dir = Path(__file__).resolve().parent
-    bottoken_file_path = script_dir / "bottoken.txt"
+
+
+    data_dir = script_dir / "data"
+
+
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    bottoken_file_path = data_dir / "bottoken.txt"
 
     if not bottoken_file_path.exists():
      print("The 'bottoken.txt' file does not exist. Creating it now...")
